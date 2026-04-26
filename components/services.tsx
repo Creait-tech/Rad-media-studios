@@ -95,7 +95,7 @@ export function Services() {
             {/* Title */}
             <h2 
               className="text-[2.5rem] sm:text-[3rem] md:text-[4rem] leading-none mb-4"
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, color: '#12102B' }}
+              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, color: '#2a1a2a' }}
             >
               Ready to Stop{' '}
               <em style={{ color: '#B8922A', fontStyle: 'italic' }}>Holding Back?</em>
@@ -122,7 +122,7 @@ export function Services() {
       {/* Section 2 - The Freedom Session */}
       <section 
         className="relative py-20 md:py-[100px] overflow-hidden"
-        style={{ backgroundColor: '#12102B' }}
+        style={{ backgroundColor: '#2a1a2a' }}
       >
         {/* Radial gradient glow */}
         <div 
@@ -272,7 +272,7 @@ export function Services() {
                 fontFamily: "'Outfit', sans-serif", 
                 fontWeight: 500, 
                 backgroundColor: '#B8922A', 
-                color: '#12102B',
+                color: '#2a1a2a',
                 boxShadow: '0 12px 36px rgba(184,146,42,0.28)'
               }}
             >
@@ -331,7 +331,7 @@ function ServiceCard({
       )}
       style={{ 
         transitionDelay: `${delays[index]}ms`,
-        backgroundColor: isFeatured ? '#12102B' : '#ffffff',
+        backgroundColor: isFeatured ? '#2a1a2a' : '#ffffff',
         border: isFeatured ? 'none' : '1px solid rgba(184,146,42,0.15)',
       }}
     >
@@ -348,7 +348,7 @@ function ServiceCard({
         <div 
           className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-[9px] uppercase tracking-wide"
           style={{ 
-            backgroundColor: '#12102B', 
+            backgroundColor: '#2a1a2a', 
             color: '#EDD896',
             border: '1px solid rgba(184,146,42,0.3)'
           }}
@@ -374,7 +374,7 @@ function ServiceCard({
           style={{ 
             fontFamily: "'Cormorant Garamond', serif", 
             fontWeight: 600,
-            color: isFeatured ? '#ffffff' : '#12102B'
+            color: isFeatured ? '#ffffff' : '#2a1a2a'
           }}
         >
           {service.title}
@@ -445,14 +445,14 @@ function ServiceCard({
           className={cn(
             "group w-full inline-flex items-center justify-center gap-2 py-[13px] px-6 rounded-[10px] text-[0.77rem] tracking-[0.08em] uppercase transition-all duration-300",
             isFeatured && "hover:bg-[#D4AE5A]",
-            isOutline && "hover:bg-[#12102B] hover:text-[#D4AE5A]",
+            isOutline && "hover:bg-[#2a1a2a] hover:text-[#D4AE5A]",
             !isFeatured && !isOutline && "hover:opacity-90 hover:scale-[1.015]"
           )}
           style={{ 
             fontFamily: "'Outfit', sans-serif", 
             fontWeight: 500,
-            backgroundColor: isFeatured ? '#B8922A' : isOutline ? 'transparent' : '#12102B',
-            color: isFeatured ? '#12102B' : isOutline ? '#12102B' : '#D4AE5A',
+            backgroundColor: isFeatured ? '#B8922A' : isOutline ? 'transparent' : '#2a1a2a',
+            color: isFeatured ? '#2a1a2a' : isOutline ? '#2a1a2a' : '#D4AE5A',
             border: isOutline ? '1.5px solid rgba(18,16,43,0.25)' : 'none',
           }}
         >
