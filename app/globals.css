@@ -5,7 +5,7 @@
 
 :root {
   /* Existing custom colors (preserved) */
-  --purple-deep: #2a1a2a;
+  --purple-deep: rgb(26, 16, 40);
   --purple-brand: #2D1B4E;
   --purple-light: #4A3167;
   --gold: #D4AF37;
@@ -20,7 +20,7 @@
   
   /* New luxury editorial colors */
   --warm-cream: #F8F5EF;
-  --navy: #2a1a2a;
+  --navy: rgb(26, 16, 40);
   --services-gold: #B8922A;
   --services-gold-light: #D4AE5A;
   --services-gold-highlight: #EDD896;
