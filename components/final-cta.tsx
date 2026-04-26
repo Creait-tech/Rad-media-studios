@@ -19,7 +19,7 @@ export function FinalCTA() {
             isInView && "opacity-100 translate-y-0"
           )}
         >
-          <h2 className="font-serif text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] mb-4 text-purple-brand leading-[1.05]">
+          <h2 className="font-serif text-[32px] sm:text-[48px] md:text-[64px] lg:text-[80px] mb-4 leading-[1.05]" style={{ color: 'rgb(26, 16, 40)' }}>
             You Were Made For More.
           </h2>
           <p className="text-[16px] sm:text-[18px] md:text-[20px] lg:text-[22px] text-gray-700 mb-10 sm:mb-12">

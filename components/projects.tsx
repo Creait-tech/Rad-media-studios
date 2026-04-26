@@ -90,10 +90,11 @@ function ProjectCard({
     <div
       ref={ref}
       className={cn(
-        "relative border border-white/[0.08] p-8 sm:p-10 md:p-12 bg-[#0d0d0d] flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-[#121212]",
+        "relative border border-white/[0.08] p-8 sm:p-10 md:p-12 flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-[#121212]",
         "opacity-0 translate-y-10 transition-all duration-700 ease-out",
         isInView && "opacity-100 translate-y-0"
       )}
+      style={{ backgroundColor: index > 0 ? 'rgb(26, 16, 40)' : '#0d0d0d' }}
       style={{ transitionDelay: `${index * 150}ms` }}
     >
       <Icon

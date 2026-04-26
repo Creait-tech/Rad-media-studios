@@ -104,7 +104,7 @@ export function Services() {
             {/* Subtitle */}
             <p 
               className="text-[0.95rem] max-w-[380px] mx-auto"
-              style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#7B748E' }}
+              style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 300, color: '#402e58' }}
             >
               Choose the experience built for where you are right now.
             </p>
@@ -121,6 +121,7 @@ export function Services() {
 
       {/* Section 2 - The Freedom Session */}
       <section 
+        id="waitlist"
         className="relative py-20 md:py-[100px] overflow-hidden"
         style={{ backgroundColor: 'rgb(26, 16, 40)' }}
       >

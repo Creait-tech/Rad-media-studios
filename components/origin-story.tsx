@@ -40,10 +40,11 @@ export function OriginStory() {
             <h2
               ref={titleRef}
               className={cn(
-                "font-serif text-[26px] sm:text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] mb-8 sm:mb-10 text-purple-brand font-semibold leading-[1.1]",
+                "font-serif text-[26px] sm:text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] mb-8 sm:mb-10 font-semibold leading-[1.1]",
                 "opacity-0 translate-y-8 transition-all duration-1000 ease-out",
                 titleInView && "opacity-100 translate-y-0"
               )}
+              style={{ color: 'rgb(26, 16, 40)' }}
             >
               I Know What It Costs To Hold Back. Because I Did It Too.
             </h2>
@@ -56,7 +57,7 @@ export function OriginStory() {
                 contentInView && "opacity-100 translate-y-0"
               )}
             >
-              <p className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] text-gray-700 leading-relaxed">
+              <p className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] leading-relaxed" style={{ color: 'rgb(26, 16, 40)' }}>
                 I spent 19 years inside the rooms where creative dreams get made or crushed. As a casting director I watched brilliantly talented people get passed over — not because they weren&apos;t good enough, but because they didn&apos;t trust themselves enough to fully show up.
               </p>
               <p className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[18px] text-gray-700 leading-relaxed">
