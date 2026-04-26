@@ -6,7 +6,7 @@
 :root {
   /* Existing custom colors (preserved) */
   --purple-deep: rgb(26, 16, 40);
-  --purple-brand: #2D1B4E;
+  --purple-brand: rgb(26, 16, 40);
   --purple-light: #4A3167;
   --gold: #D4AF37;
   --gold-muted: #B8952B;
