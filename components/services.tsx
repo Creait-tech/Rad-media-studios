@@ -14,7 +14,7 @@ const actorServices = [
     price: "$225 / 45 minutes",
     description:
       "Industry insight meets honest coaching. In this virtual session we work on your audition material, your headshots, your strategy, and the mindset keeping you from booking.",
-    link: "https://link.getcreait.com/payment-link/69ea362b7dd3512d92079014",
+    link: "https://link.getcreait.com/widget/bookings/1-on-1-coaching-with-rhavynn-d",
     linkText: "Book Your Session",
     image: "/images/insider-session.jpg",
   },
