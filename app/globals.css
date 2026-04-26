@@ -18,6 +18,14 @@
   --gray-400: #a3a3a3;
   --gray-700: #404040;
   
+  /* New luxury editorial colors */
+  --warm-cream: #F8F5EF;
+  --navy: #12102B;
+  --services-gold: #B8922A;
+  --services-gold-light: #D4AE5A;
+  --services-gold-highlight: #EDD896;
+  --muted-text: #7B748E;
+  
   /* Overridden and new shadcn/ui colors (with existing custom values taking precedence) */
   --background: #080808; /* Existing custom */
   --foreground: #ffffff; /* Existing custom */
@@ -92,8 +100,9 @@
 }
 
 @theme inline {
-  --font-sans: 'Inter', 'Inter Fallback', sans-serif;
+  --font-sans: 'Outfit', 'Outfit Fallback', sans-serif;
   --font-serif: 'Playfair Display', 'Playfair Display Fallback', serif;
+  --font-display: 'Cormorant Garamond', 'Cormorant Garamond Fallback', serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
