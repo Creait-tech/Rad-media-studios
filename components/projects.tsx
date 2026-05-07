@@ -1,10 +1,18 @@
 "use client"
 
-import { ArrowRight, Play, Film, Mic } from "lucide-react"
+import { ArrowRight, Play, Film, Mic, GraduationCap } from "lucide-react"
 import { useInView } from "@/hooks/use-in-view"
 import { cn } from "@/lib/utils"
 
-const projects = [
+type Project = {
+  icon: typeof Play
+  title: string
+  description: string
+  role: string
+  href?: string
+}
+
+const projects: Project[] = [
   {
     icon: Play,
     title: "My Boss Loves Me Too Much",
@@ -22,6 +30,13 @@ const projects = [
     title: "The Act Up Podcast",
     description: "Real conversations about creative power and self-trust",
     role: "Host • Producer",
+  },
+  {
+    icon: GraduationCap,
+    title: "Youth Filmmaking Workshop",
+    description: "Hands-on program teaching the next generation of storytellers",
+    role: "Founder • Lead Instructor",
+    href: "https://workshop.rhavynndrummer.com/",
   },
 ]
 
@@ -50,7 +65,7 @@ export function Projects() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
           {projects.map((project, index) => (
             <ProjectCard key={index} project={project} index={index} />
           ))}
@@ -80,22 +95,25 @@ function ProjectCard({
   project,
   index,
 }: {
-  project: (typeof projects)[0]
+  project: Project
   index: number
 }) {
   const { ref, isInView } = useInView(0.2)
   const Icon = project.icon
 
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        "relative border border-white/[0.08] p-8 sm:p-10 md:p-12 bg-[#0d0d0d] flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-[#121212]",
-        "opacity-0 translate-y-10 transition-all duration-700 ease-out",
-        isInView && "opacity-100 translate-y-0"
-      )}
-      style={{ transitionDelay: `${index * 150}ms` }}
-    >
+  const cardClassName = cn(
+    "group relative border border-white/[0.08] p-8 sm:p-10 md:p-12 flex flex-col h-full overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:border-gold/30 hover:bg-[#121212]",
+    "opacity-0 translate-y-10 transition-all duration-700 ease-out",
+    isInView && "opacity-100 translate-y-0"
+  )
+
+  const cardStyle = {
+    backgroundColor: index > 0 ? 'rgb(26, 16, 40)' : '#0d0d0d',
+    transitionDelay: `${index * 150}ms`,
+  }
+
+  const cardInner = (
+    <>
       <Icon
         className="w-10 h-10 sm:w-12 sm:h-12 mb-6 sm:mb-8 text-gold"
         strokeWidth={1.5}
@@ -109,6 +127,37 @@ function ProjectCard({
       <p className="text-gold text-[12px] sm:text-[13px] font-semibold uppercase tracking-[0.1em] mt-auto">
         {project.role}
       </p>
+      {project.href && (
+        <span className="mt-6 inline-flex items-center gap-2 text-gold text-[12px] sm:text-[13px] font-semibold uppercase tracking-[0.1em] transition-all duration-500 group-hover:gap-3">
+          Visit Workshop
+          <ArrowRight className="w-4 h-4" />
+        </span>
+      )}
+    </>
+  )
+
+  if (project.href) {
+    return (
+      <a
+        ref={ref as React.RefObject<HTMLAnchorElement>}
+        href={project.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={cardClassName}
+        style={cardStyle}
+      >
+        {cardInner}
+      </a>
+    )
+  }
+
+  return (
+    <div
+      ref={ref as React.RefObject<HTMLDivElement>}
+      className={cardClassName}
+      style={cardStyle}
+    >
+      {cardInner}
     </div>
   )
 }

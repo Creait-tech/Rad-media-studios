@@ -55,7 +55,7 @@ export function Contact() {
   }
 
   return (
-    <section id="waitlist" className="py-16 sm:py-20 md:py-[120px] lg:py-[160px] bg-purple-brand text-white overflow-hidden">
+    <section id="waitlist" className="py-16 sm:py-20 md:py-[120px] lg:py-[160px] text-white overflow-hidden" style={{ backgroundColor: 'rgb(26, 16, 40)' }}>
       <div className="container mx-auto px-5 sm:px-6 md:px-8 lg:px-10">
         <div
           ref={ref}

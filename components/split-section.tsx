@@ -36,7 +36,7 @@ export function SplitSection() {
           contentInView && "opacity-100 translate-x-0 transition-all duration-1000 ease-out delay-200"
         )}
       >
-        <h2 className="font-serif text-[26px] sm:text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] leading-[1.1] sm:leading-[1.05] mb-6 sm:mb-8 text-purple-brand font-semibold text-balance">
+        <h2 className="font-serif text-[26px] sm:text-[32px] md:text-[42px] lg:text-[48px] xl:text-[56px] leading-[1.1] sm:leading-[1.05] mb-6 sm:mb-8 font-semibold text-balance" style={{ color: 'rgb(26, 16, 40)' }}>
           I Create Bold Stories. And I Help Others Find The Courage To Do The Same.
         </h2>
         <p className="text-[15px] sm:text-[16px] md:text-[17px] lg:text-[19px] text-gray-700 mb-5 sm:mb-6 max-w-[600px] leading-relaxed">

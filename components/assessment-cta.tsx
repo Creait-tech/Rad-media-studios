@@ -30,7 +30,7 @@ export function AssessmentCTA() {
           </p>
           <Link
             href="/assessment"
-            className="inline-flex items-center justify-center gap-3 bg-gold text-black py-4 px-8 sm:py-5 sm:px-12 text-[13px] sm:text-sm font-semibold tracking-[0.1em] uppercase transition-all duration-500 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(212,175,55,0.3)]"
+            className="inline-flex items-center justify-center gap-3 bg-gold text-black py-4 px-8 sm:py-5 sm:px-12 text-[13px] sm:text-sm font-bold tracking-[0.1em] uppercase transition-all duration-500 hover:bg-white hover:-translate-y-0.5 hover:shadow-[0_10px_20px_rgba(212,175,55,0.3)]"
           >
             Take The Free Assessment
             <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
