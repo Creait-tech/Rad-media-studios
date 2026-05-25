@@ -23,24 +23,6 @@ const actorServices = [
     variant: "light" as const,
   },
   {
-    tag: "IN-PERSON WORKSHOP · ATLANTA",
-    title: 'The "Audacity" Intensive',
-    price: "$299",
-    priceSuffix: "/ full day",
-    description: "Full-day immersive for actors ready to stop playing small. Technique, mindset, industry truth.",
-    checklist: [
-      "Live scene & cold read work",
-      "Industry panel",
-      "Audition psychology",
-      "Atlanta casting community"
-    ],
-    link: "https://link.getcreait.com/payment-link/69b8e384942c7dd36efd0b21",
-    linkText: "Secure Your Spot",
-    finePrint: "Audition required · Limited seats",
-    variant: "featured" as const,
-    badge: "MOST POPULAR",
-  },
-  {
     tag: "VIRTUAL · 3 HOURS LIVE",
     title: "Virtual Audition Workshop",
     price: "$200",
@@ -110,8 +92,8 @@ export function Services() {
             </p>
           </div>
 
-          {/* 3-Column Card Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {/* Centered 2-Column Card Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[800px] mx-auto">
             {actorServices.map((service, index) => (
               <ServiceCard key={index} service={service} index={index} />
             ))}
