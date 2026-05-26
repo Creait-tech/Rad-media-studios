@@ -92,7 +92,7 @@ export function Services() {
             </p>
           </div>
 
-          {/* Centered 2-Column Card Grid */}
+          {/* Centered 2-Column Services Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-[800px] mx-auto">
             {actorServices.map((service, index) => (
               <ServiceCard key={index} service={service} index={index} />
