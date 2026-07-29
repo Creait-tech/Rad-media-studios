@@ -110,12 +110,23 @@ export function Navbar() {
           Work With Me
         </Link>
         <Link
-          href="#projects"
+          href="/workshops"
           onClick={closeMenu}
           className={cn(
             "text-white no-underline text-lg sm:text-xl lg:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] lg:tracking-[0.15em] font-medium opacity-90 hover:opacity-100 hover:text-gold transition-all duration-500",
             "transform",
             isMenuOpen ? "translate-y-0 opacity-90 transition-all duration-500 delay-250" : "translate-y-4 opacity-0 lg:translate-y-0 lg:opacity-80"
+          )}
+        >
+          Workshops
+        </Link>
+        <Link
+          href="#projects"
+          onClick={closeMenu}
+          className={cn(
+            "text-white no-underline text-lg sm:text-xl lg:text-xs uppercase tracking-[0.15em] sm:tracking-[0.2em] lg:tracking-[0.15em] font-medium opacity-90 hover:opacity-100 hover:text-gold transition-all duration-500",
+            "transform",
+            isMenuOpen ? "translate-y-0 opacity-90 transition-all duration-500 delay-275" : "translate-y-4 opacity-0 lg:translate-y-0 lg:opacity-80"
           )}
         >
           My Projects
