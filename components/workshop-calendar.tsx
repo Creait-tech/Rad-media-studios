@@ -1,9 +1,16 @@
 "use client"
 
+import { useState } from "react"
 import Link from "next/link"
 import { ArrowRight, Clock, MapPin } from "lucide-react"
 import { useInView } from "@/hooks/use-in-view"
 import { cn } from "@/lib/utils"
+
+type TicketOption = {
+  label: string
+  price: string
+  href: string
+}
 
 type Session = {
   title: string
@@ -15,6 +22,7 @@ type Session = {
   location: string
   href: string | null
   comingSoon?: boolean
+  options?: TicketOption[]
 }
 
 type MonthGroup = {
@@ -133,16 +141,18 @@ const SCHEDULE: MonthGroup[] = [
 
 function SessionCard({ session }: { session: Session }) {
   const { ref, isInView } = useInView(0.15)
-  const isBookable = Boolean(session.href) && !session.comingSoon
+  const [showOptions, setShowOptions] = useState(false)
+  const hasOptions = Boolean(session.options?.length)
+  const isBookable = (Boolean(session.href) || hasOptions) && !session.comingSoon
 
-  const content = (
+  const cardBody = (
     <div
       ref={ref}
       className={cn(
         "group relative flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-8 border border-white/10 bg-[#0d0d0d] p-6 sm:p-8 transition-all duration-500",
         "opacity-0 translate-y-6 transition-all duration-700 ease-out",
         isInView && "opacity-100 translate-y-0",
-        isBookable && "hover:border-gold/40 hover:bg-[#121212] cursor-pointer"
+        isBookable && !hasOptions && "hover:border-gold/40 hover:bg-[#121212] cursor-pointer"
       )}
     >
       {/* Calendar-style date marker */}
@@ -174,7 +184,33 @@ function SessionCard({ session }: { session: Session }) {
 
       {/* CTA */}
       <div className="flex-shrink-0">
-        {isBookable ? (
+        {hasOptions ? (
+          showOptions ? (
+            <div className="flex flex-col gap-2 items-stretch sm:items-end">
+              {session.options!.map((option) => (
+                <Link
+                  key={option.label}
+                  href={option.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-between gap-3 bg-gold text-black py-2.5 px-5 text-[11px] sm:text-[12px] font-semibold tracking-[0.08em] uppercase transition-all duration-500 hover:bg-white whitespace-nowrap"
+                >
+                  {option.label}
+                  <span className="font-normal">{option.price}</span>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setShowOptions(true)}
+              className="inline-flex items-center justify-center gap-2 bg-gold text-black py-3 px-6 sm:py-3.5 sm:px-7 text-[12px] sm:text-[13px] font-semibold tracking-[0.1em] uppercase transition-all duration-500 hover:bg-white whitespace-nowrap"
+            >
+              Reserve Your Seat
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          )
+        ) : isBookable ? (
           <span className="inline-flex items-center justify-center gap-2 bg-gold text-black py-3 px-6 sm:py-3.5 sm:px-7 text-[12px] sm:text-[13px] font-semibold tracking-[0.1em] uppercase transition-all duration-500 group-hover:bg-white whitespace-nowrap">
             Reserve Your Seat
             <ArrowRight className="w-4 h-4" />
@@ -188,15 +224,15 @@ function SessionCard({ session }: { session: Session }) {
     </div>
   )
 
-  if (isBookable && session.href) {
+  if (isBookable && session.href && !hasOptions) {
     return (
       <Link href={session.href} target="_blank" rel="noopener noreferrer" className="block">
-        {content}
+        {cardBody}
       </Link>
     )
   }
 
-  return content
+  return cardBody
 }
 
 export function WorkshopCalendar() {
