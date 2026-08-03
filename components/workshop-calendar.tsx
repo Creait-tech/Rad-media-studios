@@ -59,7 +59,7 @@ const SCHEDULE: MonthGroup[] = [
         date: "Saturday, September 12",
         time: "10:00 AM – 2:00 PM (Workshop Only) or 10:00 AM – 4:00 PM (Includes Mixer)",
         location: "Atlanta, GA (In Person)",
-        href: "https://link.getcreait.com/payment-link/6a6a1291a655fa0b802a6d3a",
+        href: null,
       },
       {
         title: "Virtual Audition Workshop",
