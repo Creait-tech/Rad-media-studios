@@ -68,6 +68,10 @@ const SCHEDULE: MonthGroup[] = [
         time: "10:00 AM – 2:00 PM (Workshop Only) or 10:00 AM – 4:00 PM (Includes Mixer)",
         location: "Atlanta, GA (In Person)",
         href: null,
+        options: [
+          { label: "Workshop Only", price: "$150", href: "https://link.getcreait.com/payment-link/6a70fed3a655fa0b802a7b19" },
+          { label: "Workshop + Mixer", price: "$199", href: "https://link.getcreait.com/payment-link/6a6a1291a655fa0b802a6d3a" },
+        ],
       },
       {
         title: "Virtual Audition Workshop",
