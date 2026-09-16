@@ -300,7 +300,6 @@ function ServiceCard({
   const { ref, isInView } = useInView(0.2)
   const delays = [50, 140, 230]
 
-  const isFeatured = service.variant === "featured"
   const isOutline = service.variant === "outline"
 
   return (
@@ -312,52 +311,30 @@ function ServiceCard({
         isInView && "opacity-100 translate-y-0",
         "hover:-translate-y-1.5 hover:shadow-[0_24px_60px_rgba(18,16,43,0.1)]"
       )}
-      style={{ 
+      style={{
         transitionDelay: `${delays[index]}ms`,
-        backgroundColor: isFeatured ? 'rgb(26, 16, 40)' : '#ffffff',
-        border: isFeatured ? 'none' : '1px solid rgba(184,146,42,0.15)',
+        backgroundColor: '#ffffff',
+        border: '1px solid rgba(184,146,42,0.15)',
       }}
     >
-      {/* Gold gradient bar for featured card */}
-      {isFeatured && (
-        <div 
-          className="absolute top-0 left-0 right-0 h-[3px] rounded-t-[20px]"
-          style={{ background: 'linear-gradient(to right, #B8922A, #D4AE5A)' }}
-        />
-      )}
-
-      {/* Badge for featured card */}
-      {service.badge && (
-        <div 
-          className="absolute top-4 right-4 px-3 py-1.5 rounded-full text-[9px] uppercase tracking-wide"
-          style={{ 
-            backgroundColor: 'rgb(26, 16, 40)', 
-            color: '#EDD896',
-            border: '1px solid rgba(184,146,42,0.3)'
-          }}
-        >
-          {service.badge}
-        </div>
-      )}
-
       <div className="p-7 sm:p-8 flex flex-col flex-grow">
         {/* Tag */}
-        <span 
+        <span
           className="text-[9px] uppercase tracking-wider mb-3"
-          style={{ 
-            color: isFeatured ? 'rgba(184,146,42,0.55)' : '#7B748E'
+          style={{
+            color: '#7B748E'
           }}
         >
           {service.tag}
         </span>
 
         {/* Title */}
-        <h3 
+        <h3
           className="text-[1.45rem] mb-2"
-          style={{ 
-            fontFamily: "'Cormorant Garamond', serif", 
+          style={{
+            fontFamily: "'Cormorant Garamond', serif",
             fontWeight: 600,
-            color: isFeatured ? '#ffffff' : 'rgb(26, 16, 40)'
+            color: 'rgb(26, 16, 40)'
           }}
         >
           {service.title}
@@ -365,27 +342,27 @@ function ServiceCard({
 
         {/* Price */}
         <div className="flex items-baseline gap-1 mb-3">
-          <span 
+          <span
             className="text-[1.2rem]"
-            style={{ color: isFeatured ? '#D4AE5A' : '#B8922A' }}
+            style={{ color: '#B8922A' }}
           >
             {service.price}
           </span>
-          <span 
+          <span
             className="text-[0.75rem]"
-            style={{ color: isFeatured ? 'rgba(255,255,255,0.35)' : '#7B748E' }}
+            style={{ color: '#7B748E' }}
           >
             {service.priceSuffix}
           </span>
         </div>
 
         {/* Description */}
-        <p 
+        <p
           className="text-[0.84rem] leading-[1.65] mb-5"
-          style={{ 
-            fontFamily: "'Outfit', sans-serif", 
+          style={{
+            fontFamily: "'Outfit', sans-serif",
             fontWeight: 300,
-            color: isFeatured ? 'rgba(255,255,255,0.5)' : '#7B748E'
+            color: '#7B748E'
           }}
         >
           {service.description}
@@ -395,23 +372,23 @@ function ServiceCard({
         <ul className="space-y-2.5 mb-6 flex-grow">
           {service.checklist.map((item, i) => (
             <li key={i} className="flex items-start gap-2.5">
-              <div 
+              <div
                 className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                style={{ 
-                  border: `1.5px solid ${isFeatured ? '#D4AE5A' : '#B8922A'}`,
+                style={{
+                  border: '1.5px solid #B8922A',
                 }}
               >
-                <Check 
-                  className="w-2.5 h-2.5" 
-                  style={{ color: isFeatured ? '#D4AE5A' : '#B8922A' }}
+                <Check
+                  className="w-2.5 h-2.5"
+                  style={{ color: '#B8922A' }}
                   strokeWidth={2.5}
                 />
               </div>
-              <span 
+              <span
                 className="text-[0.84rem]"
-                style={{ 
+                style={{
                   fontFamily: "'Outfit', sans-serif",
-                  color: isFeatured ? 'rgba(255,255,255,0.72)' : '#7B748E'
+                  color: '#7B748E'
                 }}
               >
                 {item}
@@ -427,31 +404,20 @@ function ServiceCard({
           rel="noopener noreferrer"
           className={cn(
             "group w-full inline-flex items-center justify-center gap-2 py-[13px] px-6 rounded-[10px] text-[0.77rem] tracking-[0.08em] uppercase transition-all duration-300",
-            isFeatured && "hover:bg-[#D4AE5A]",
             isOutline && "hover:bg-[rgb(26, 16, 40)] hover:text-[#D4AE5A]",
-            !isFeatured && !isOutline && "hover:opacity-90 hover:scale-[1.015]"
+            !isOutline && "hover:opacity-90 hover:scale-[1.015]"
           )}
-          style={{ 
-            fontFamily: "'Outfit', sans-serif", 
+          style={{
+            fontFamily: "'Outfit', sans-serif",
             fontWeight: 500,
-            backgroundColor: isFeatured ? '#B8922A' : isOutline ? 'transparent' : 'rgb(26, 16, 40)',
-            color: isFeatured ? 'rgb(26, 16, 40)' : isOutline ? 'rgb(26, 16, 40)' : '#D4AE5A',
+            backgroundColor: isOutline ? 'transparent' : 'rgb(26, 16, 40)',
+            color: isOutline ? 'rgb(26, 16, 40)' : '#D4AE5A',
             border: isOutline ? '1.5px solid rgba(18,16,43,0.25)' : 'none',
           }}
         >
           {service.linkText}
           <ArrowRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
         </Link>
-
-        {/* Fine print */}
-        {service.finePrint && (
-          <p 
-            className="text-center text-[0.7rem] italic mt-3"
-            style={{ color: 'rgba(255,255,255,0.3)' }}
-          >
-            {service.finePrint}
-          </p>
-        )}
       </div>
     </div>
   )
