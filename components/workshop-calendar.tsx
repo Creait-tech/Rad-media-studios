@@ -6,6 +6,9 @@ import { ArrowRight, Clock, MapPin } from "lucide-react"
 import { useInView } from "@/hooks/use-in-view"
 import { cn } from "@/lib/utils"
 
+/** All sessions are scheduled and advertised in Rhavynn's local time. */
+const EVENT_TIME_ZONE = "America/New_York"
+
 type TicketOption = {
   label: string
   price: string
@@ -13,11 +16,14 @@ type TicketOption = {
 }
 
 type Session = {
-  title: string
-  weekday: string
-  month: string
-  day: string
+  /**
+   * ISO date (YYYY-MM-DD) and the single source of truth for this session.
+   * The weekday, month abbreviation and day number on the card are all derived
+   * from it, so they can never drift out of sync the way hand-typed ones did.
+   * A session drops off the page automatically once this date has passed.
+   */
   date: string
+  title: string
   time: string
   location: string
   href: string | null
@@ -25,129 +31,111 @@ type Session = {
   options?: TicketOption[]
 }
 
+/**
+ * To add a workshop: add an entry here. Order doesn't matter — the list is
+ * sorted and grouped into months automatically. Past sessions do NOT need to be
+ * deleted; they stop rendering on their own the day after they happen.
+ */
+const SESSIONS: Session[] = [
+  {
+    date: "2026-09-16",
+    title: "Virtual Audition Workshop",
+    time: "7:00 PM – 10:00 PM EST",
+    location: "Live via Zoom",
+    href: "https://link.getcreait.com/payment-link/6a6a139ba655fa0b802a6d3e",
+  },
+  {
+    date: "2026-10-03",
+    title: "Performance Intensive",
+    time: "10:00 AM – 4:00 PM EST",
+    location: "Atlanta, GA (In Person)",
+    href: "https://link.getcreait.com/payment-link/6a6a12e57b99151a5404121b",
+  },
+  {
+    date: "2026-10-14",
+    title: "Virtual Audition Workshop",
+    time: "7:00 PM – 10:00 PM EST",
+    location: "Live via Zoom",
+    href: "https://link.getcreait.com/payment-link/6a6a13467b99151a5404121e",
+  },
+  {
+    date: "2026-11-07",
+    title: "Master the Audition: Beginner",
+    time: "10:00 AM – 2:00 PM EST",
+    location: "Atlanta, GA (In Person)",
+    href: "https://link.getcreait.com/payment-link/6a6a1263a655fa0b802a6d38",
+  },
+  {
+    date: "2026-12-05",
+    title: "Special RAD Media Studios Event",
+    time: "Details Coming Soon",
+    location: "TBD",
+    href: null,
+    comingSoon: true,
+  },
+]
+
+/** Parse YYYY-MM-DD as a fixed UTC instant so formatting never shifts a day. */
+function parseEventDate(iso: string): Date {
+  const [year, month, day] = iso.split("-").map(Number)
+  return new Date(Date.UTC(year, month - 1, day))
+}
+
+function formatEventDate(iso: string, options: Intl.DateTimeFormatOptions): string {
+  return new Intl.DateTimeFormat("en-US", { timeZone: "UTC", ...options }).format(
+    parseEventDate(iso)
+  )
+}
+
+/** Today's date in the event time zone, as YYYY-MM-DD for direct string compare. */
+function currentDateKey(instant: Date): string {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: EVENT_TIME_ZONE,
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(instant)
+  const part = (type: string) => parts.find((p) => p.type === type)?.value ?? ""
+  return `${part("year")}-${part("month")}-${part("day")}`
+}
+
 type MonthGroup = {
-  month: string
+  key: string
+  label: string
   sessions: Session[]
 }
 
-const SCHEDULE: MonthGroup[] = [
-  {
-    month: "August",
-    sessions: [
-      {
-        title: "Virtual Audition Workshop",
-        weekday: "Friday",
-        month: "AUG",
-        day: "12",
-        date: "Friday, August 12",
-        time: "7:00 PM – 10:00 PM EST",
-        location: "Live via Zoom",
-        href: "https://link.getcreait.com/payment-link/69ea35ce7dd3512d92079003",
-      },
-      {
-        title: "Performance Intensive",
-        weekday: "Saturday",
-        month: "AUG",
-        day: "29",
-        date: "Saturday, August 29",
-        time: "10:00 AM – 4:00 PM EST",
-        location: "Atlanta, GA (In Person)",
-        href: "https://link.getcreait.com/payment-link/6a6a131f7b99151a5404121d",
-      },
-    ],
-  },
-  {
-    month: "September",
-    sessions: [
-      {
-        title: "Atlanta Competition Style Workshop",
-        weekday: "Saturday",
-        month: "SEP",
-        day: "12",
-        date: "Saturday, September 12",
-        time: "10:00 AM – 2:00 PM (Workshop Only) or 10:00 AM – 4:00 PM (Includes Mixer)",
-        location: "Atlanta, GA (In Person)",
-        href: null,
-        options: [
-          { label: "Workshop Only", price: "$150", href: "https://link.getcreait.com/payment-link/6a70fed3a655fa0b802a7b19" },
-          { label: "Workshop + Mixer", price: "$199", href: "https://link.getcreait.com/payment-link/6a6a1291a655fa0b802a6d3a" },
-        ],
-      },
-      {
-        title: "Virtual Audition Workshop",
-        weekday: "Wednesday",
-        month: "SEP",
-        day: "16",
-        date: "Wednesday, September 16",
-        time: "7:00 PM – 10:00 PM EST",
-        location: "Live via Zoom",
-        href: "https://link.getcreait.com/payment-link/6a6a139ba655fa0b802a6d3e",
-      },
-    ],
-  },
-  {
-    month: "October",
-    sessions: [
-      {
-        title: "Performance Intensive",
-        weekday: "Tuesday",
-        month: "OCT",
-        day: "3",
-        date: "Tuesday, October 3",
-        time: "10:00 AM – 4:00 PM EST",
-        location: "Atlanta, GA (In Person)",
-        href: "https://link.getcreait.com/payment-link/6a6a12e57b99151a5404121b",
-      },
-      {
-        title: "Virtual Audition Workshop",
-        weekday: "Wednesday",
-        month: "OCT",
-        day: "14",
-        date: "Wednesday, October 14",
-        time: "7:00 PM – 10:00 PM EST",
-        location: "Live via Zoom",
-        href: "https://link.getcreait.com/payment-link/6a6a13467b99151a5404121e",
-      },
-    ],
-  },
-  {
-    month: "November",
-    sessions: [
-      {
-        title: "Master the Audition: Beginner",
-        weekday: "Saturday",
-        month: "NOV",
-        day: "7",
-        date: "Saturday, November 7",
-        time: "10:00 AM – 2:00 PM EST",
-        location: "Atlanta, GA (In Person)",
-        href: "https://link.getcreait.com/payment-link/6a6a1263a655fa0b802a6d38",
-      },
-    ],
-  },
-  {
-    month: "December",
-    sessions: [
-      {
-        title: "Special RAD Media Studios Event",
-        weekday: "Saturday",
-        month: "DEC",
-        day: "5",
-        date: "Saturday, December 5",
-        time: "Details Coming Soon",
-        location: "TBD",
-        href: null,
-        comingSoon: true,
-      },
-    ],
-  },
-]
+function groupByMonth(sessions: Session[]): MonthGroup[] {
+  const groups: MonthGroup[] = []
+  for (const session of sessions) {
+    const key = session.date.slice(0, 7)
+    const group = groups.find((g) => g.key === key)
+    if (group) {
+      group.sessions.push(session)
+    } else {
+      groups.push({
+        key,
+        label: formatEventDate(session.date, { month: "long" }),
+        sessions: [session],
+      })
+    }
+  }
+  return groups
+}
 
 function SessionCard({ session }: { session: Session }) {
   const { ref, isInView } = useInView(0.15)
   const [showOptions, setShowOptions] = useState(false)
   const hasOptions = Boolean(session.options?.length)
   const isBookable = (Boolean(session.href) || hasOptions) && !session.comingSoon
+
+  const monthAbbr = formatEventDate(session.date, { month: "short" }).toUpperCase()
+  const dayNumber = formatEventDate(session.date, { day: "numeric" })
+  const fullDate = formatEventDate(session.date, {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+  })
 
   const cardBody = (
     <div
@@ -160,13 +148,17 @@ function SessionCard({ session }: { session: Session }) {
       )}
     >
       {/* Calendar-style date marker */}
-      <div className="flex-shrink-0 w-16 sm:w-20 text-center border-r border-white/10 pr-6 sm:pr-8">
+      <div
+        className="flex-shrink-0 w-16 sm:w-20 text-center border-r border-white/10 pr-6 sm:pr-8"
+        title={fullDate}
+      >
         <span className="block text-[10px] sm:text-[11px] tracking-[0.2em] uppercase text-gold font-medium mb-1">
-          {session.month}
+          {monthAbbr}
         </span>
         <span className="block font-serif text-[36px] sm:text-[44px] leading-none text-white">
-          {session.day}
+          {dayNumber}
         </span>
+        <span className="sr-only">{fullDate}</span>
       </div>
 
       {/* Details */}
@@ -239,8 +231,22 @@ function SessionCard({ session }: { session: Session }) {
   return cardBody
 }
 
-export function WorkshopCalendar() {
+/**
+ * `now` is an ISO instant supplied by the server component so the server and
+ * client agree on what "today" is. Without it both sides would call their own
+ * clock and React would flag a hydration mismatch.
+ */
+export function WorkshopCalendar({ now }: { now?: string }) {
   const { ref: headerRef, isInView: headerInView } = useInView(0.2)
+
+  const today = currentDateKey(now ? new Date(now) : new Date())
+  const upcoming = SESSIONS.filter((session) => session.date >= today).sort((a, b) =>
+    a.date.localeCompare(b.date)
+  )
+  const groups = groupByMonth(upcoming)
+
+  const years = Array.from(new Set(upcoming.map((session) => session.date.slice(0, 4))))
+  const heading = years.length === 1 ? `${years[0]} Workshop Calendar` : "Workshop Calendar"
 
   return (
     <section className="relative py-16 sm:py-20 md:py-[120px] lg:py-[160px] bg-black overflow-hidden">
@@ -259,10 +265,10 @@ export function WorkshopCalendar() {
           )}
         >
           <span className="text-[10px] sm:text-[11px] tracking-[0.2em] sm:tracking-[0.25em] uppercase text-gold block mb-4 sm:mb-5 font-medium">
-            2026 Workshop Calendar
+            {heading}
           </span>
           <h1 className="font-serif text-[32px] sm:text-[44px] md:text-[56px] lg:text-[64px] leading-none text-white mb-5">
-            2026 Workshop Calendar
+            {heading}
           </h1>
           <p className="text-gray-400 text-[15px] sm:text-[17px] md:text-[19px] leading-relaxed">
             Train with Rhavynn Drummer through live workshops designed to strengthen
@@ -270,20 +276,39 @@ export function WorkshopCalendar() {
           </p>
         </div>
 
-        <div className="max-w-[820px] mx-auto space-y-14 sm:space-y-16">
-          {SCHEDULE.map((group) => (
-            <div key={group.month}>
-              <h2 className="font-serif text-[13px] sm:text-sm tracking-[0.3em] uppercase text-white/50 mb-5 sm:mb-6">
-                {group.month}
-              </h2>
-              <div className="space-y-4 sm:space-y-5">
-                {group.sessions.map((session) => (
-                  <SessionCard key={`${session.title}-${session.date}`} session={session} />
-                ))}
+        {groups.length > 0 ? (
+          <div className="max-w-[820px] mx-auto space-y-14 sm:space-y-16">
+            {groups.map((group) => (
+              <div key={group.key}>
+                <h2 className="font-serif text-[13px] sm:text-sm tracking-[0.3em] uppercase text-white/50 mb-5 sm:mb-6">
+                  {group.label}
+                </h2>
+                <div className="space-y-4 sm:space-y-5">
+                  {group.sessions.map((session) => (
+                    <SessionCard key={`${session.title}-${session.date}`} session={session} />
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <div className="max-w-[560px] mx-auto text-center border border-white/10 bg-[#0d0d0d] p-10 sm:p-14">
+            <h2 className="font-serif text-[24px] sm:text-[30px] text-white mb-4 leading-tight">
+              New dates are on the way
+            </h2>
+            <p className="text-gray-400 text-[15px] sm:text-[16px] leading-relaxed mb-8">
+              The next round of workshops is being scheduled now. Join the waitlist
+              and you&apos;ll hear about new dates before they&apos;re announced anywhere else.
+            </p>
+            <Link
+              href="/#waitlist"
+              className="inline-flex items-center justify-center gap-2 bg-gold text-black py-3 px-6 sm:py-3.5 sm:px-7 text-[12px] sm:text-[13px] font-semibold tracking-[0.1em] uppercase transition-all duration-500 hover:bg-white whitespace-nowrap"
+            >
+              Join The Waitlist
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )

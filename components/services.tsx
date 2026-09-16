@@ -34,7 +34,7 @@ const actorServices = [
       "On-camera presence",
       "Self-tape strategy"
     ],
-    link: "https://link.getcreait.com/payment-link/69ea35ce7dd3512d92079003",
+    link: "https://link.getcreait.com/payment-link/6a6a13467b99151a5404121e",
     linkText: "Join The Next Session",
     variant: "outline" as const,
   },
