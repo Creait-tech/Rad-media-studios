@@ -98,7 +98,9 @@ function ProjectCard({
   project: Project
   index: number
 }) {
-  const { ref, isInView } = useInView(0.2)
+  const { ref: anchorRef, isInView: anchorInView } = useInView<HTMLAnchorElement>(0.2)
+  const { ref: divRef, isInView: divInView } = useInView<HTMLDivElement>(0.2)
+  const isInView = project.href ? anchorInView : divInView
   const Icon = project.icon
 
   const cardClassName = cn(
@@ -139,7 +141,7 @@ function ProjectCard({
   if (project.href) {
     return (
       <a
-        ref={ref as React.RefObject<HTMLAnchorElement>}
+        ref={anchorRef}
         href={project.href}
         target="_blank"
         rel="noopener noreferrer"
@@ -153,7 +155,7 @@ function ProjectCard({
 
   return (
     <div
-      ref={ref as React.RefObject<HTMLDivElement>}
+      ref={divRef}
       className={cardClassName}
       style={cardStyle}
     >
